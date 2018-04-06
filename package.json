@@ -8,10 +8,12 @@
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
     "lint": "eslint --ext .js,.vue src",
-    "build": "node build/build.js"
+    "build": "node build/build.js",
+    "server": "nodemon server/server.js"
   },
   "dependencies": {
     "express": "^4.16.3",
+    "mongoose": "^5.0.13",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1"
   },
@@ -65,5 +67,6 @@
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
-  ]
+  ],
+  "proxy": "http://127.0.0.1:9000"
 }
