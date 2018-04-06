@@ -2,7 +2,7 @@
   "name": "bicycle-sharing",
   "version": "1.0.0",
   "description": "A Vue.js project",
-  "author": "waynelijia_i <waynelijia_i@didichunxing.com>",
+  "author": "lj614418910 <614418910@qq.com>",
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
@@ -16,6 +16,7 @@
     "express": "^4.16.3",
     "mint-ui": "^2.2.13",
     "mongoose": "^5.0.13",
+    "utility": "^1.13.1",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1"
   },
