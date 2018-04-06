@@ -1,6 +1,6 @@
 const express = require('express')
 
-
+const utils = require("../build/utils")
 const model = require("./model")
 const userRouter = require("./user")
 
@@ -14,7 +14,8 @@ app.get('/', function (req, res) {
 
 app.use('/user', userRouter)
 
+let host = utils.getIPAdress()
 //后台端口9000
-server.listen(9000, function (params) {
-  console.log("Node app start at port 9000")
+server.listen(9000, function () {
+  console.log(`Node app start at port ${host}:9000`)
 })
