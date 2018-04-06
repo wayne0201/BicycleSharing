@@ -7,6 +7,11 @@ const User = model.getModel('user')
 const Chat = model.getModel('bicycle')
 
 
+Router.get('/lll', function (req, res) {
+  res.json({ code: 0, num: 111 })
+})
+
+
 function md5pwd(pwd) {
   //增加密码复杂度
   const salt = 'Increase_the_complexity_of_the_password_0123456789'
