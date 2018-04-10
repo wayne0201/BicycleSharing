@@ -9,7 +9,9 @@ const Chat = model.getModel('bicycle')
 
 
 Router.get('/lll', function (req, res) {
-  res.json({ code: 0, num: 111 })
+  setTimeout(() => {
+    res.json({ code: 0, num: 111 })
+  }, 1000)
 })
 
 
