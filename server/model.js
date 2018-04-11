@@ -8,20 +8,93 @@ mongoose.connection.on('connected', function () {
 })
 
 const model = {
-  user: {
-    user: {
+  personalUser: {
+    personal_id:{
       type: String,
       require: true
     },
-    pwd: {
+    password:{
+      type: String,
+      require: true
+    },
+    type:{
+      type: Number,
+      default: 0
+    },
+    nickname:{
+      type: String
+    },
+    lease_status: {
+      type: Boolean,
+      default: false
+    }
+  },
+  enterpriseUser: {
+    enterprise_id:{
+      type: String,
+      require: true
+    },
+    password: {
+      type: String,
+      require: true
+    },
+    type: {
+      type: Number,
+      default: 1
+    },
+    enterprise_name: {
+      type: String,
+      require: true
+    },
+    contacts: {
       type: String,
       require: true
     }
   },
-  bicycle: {
-    bicycleid: {
+  order: {
+    order_id: {
       type: String,
-      require: true,
+      require: true
+    },
+    personal_id: {
+      type: String,
+      require: true
+    },
+    bicycle_id: {
+      type: String,
+      require: true
+    },
+    order_status: {
+      type: String,
+      default: 0
+    },
+    create_time: {
+      type: Number,
+      default: new Date().getTime()
+    },
+    end_time: {
+      type: Number
+    }
+  },
+  bicycle: {
+    bicycle_id: {
+      type: String,
+      require: true
+    },
+    personal_id: {
+      type: String
+    },
+    enterprise_id: {
+      type: String,
+      require: true
+    },
+    bicycle_pwd: {
+      type: String,
+      require: true
+    },
+    bicycle_status: {
+      type: Number,
+      default: 1
     }
   }
 }

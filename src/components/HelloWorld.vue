@@ -10,7 +10,7 @@ export default {
   name: 'HelloWorld',
   data () {
     return {
-      val: ""
+      val: "Hello World!"
     }
   },
   mounted() {
@@ -18,7 +18,6 @@ export default {
       .then(res => {
           if (res.status === 200 && res.data.code === 0){
             console.log(res.data)
-            this.val = res.data.val
           } else {
           }
       })

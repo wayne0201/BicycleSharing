@@ -4,14 +4,20 @@ const utils = require("utility")
 const model = require("./model")
 
 const Router = express.Router()
-const User = model.getModel('user')
-const Chat = model.getModel('bicycle')
+const Personal = model.getModel('personalUser')
+const Enterprise = model.getModel('enterpriseUser')
+const Order = model.getModel('order')
+const Bicycle = model.getModel('bicycle')
+
+
+
+
 
 
 Router.get('/lll', function (req, res) {
-  setTimeout(() => {
-    res.json({ code: 0, val: "Hello World!" })
-  }, 1000)
+  Bicycle.find({}, function (err, userdoc) {
+    res.json({ code: 0, val: userdoc })
+  })
 })
 
 
