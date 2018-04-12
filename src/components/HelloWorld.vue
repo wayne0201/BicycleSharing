@@ -5,12 +5,18 @@
 </template>
 
 <script>
+import { mapActions, mapState, mapGetters} from 'vuex'
 export default {
   name: 'HelloWorld',
   data () {
     return {
       val: "Hello World!"
     }
+  },
+  computed: {
+    ...mapState({
+      user: state => state.user
+    })
   },
   mounted() {
   }

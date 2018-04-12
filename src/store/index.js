@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import index from './modules/index'
+import user from './modules/user'
 
 
 let modules = {
-  index
+  user
 }
 
 Vue.use(Vuex)

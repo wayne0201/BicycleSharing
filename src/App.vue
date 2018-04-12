@@ -7,8 +7,18 @@
 </template>
 
 <script>
+import { mapActions} from 'vuex'
 export default {
-  name: 'App'
+  name: 'App',
+  methods:{
+    ...mapActions(["getInfo"])
+  },
+  mounted() {
+    this.getInfo({
+      onSuccess: () => this.$router.push("/"),
+      onFail: () => this.$router.push("/login")
+    })
+  }
 }
 </script>
 

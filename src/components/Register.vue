@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex'
 export default {
   name: 'Register',
   data () {
@@ -39,7 +40,13 @@ export default {
       type: false
     }
   },
+  computed: {
+    ...mapState({
+      user: state => state.user
+    })
+  },
   methods: {
+    ...mapActions(["doRegister"]),
     validate() {
       let idRe = /^[a-zA-z]\w{3,15}$/
       let pwdRe = /\w{3,15}$/
@@ -85,11 +92,13 @@ export default {
           type: Number(this.type)
         }
       }
-      axios.post('/user/register', params).then(res => {
-        if (res.status === 200 && res.data.code === 0){
-          console.log(res.data);
-        } else {
-          console.log(res.data);
+      this.doRegister({
+        params,
+        onSuccess: () => {
+          this.$router.push("/")
+        },
+        onFail: () => {
+          Toast(this.user.msg)
         }
       })
     }

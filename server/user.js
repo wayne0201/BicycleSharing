@@ -9,6 +9,7 @@ const Enterprise = model.getModel('enterpriseUser')
 const Order = model.getModel('order')
 const Bicycle = model.getModel('bicycle')
 
+const _filer = { password: 0, __v: 0 };
 
 Router.post('/register', function (req, res) {
   const params = req.body;
@@ -35,9 +36,11 @@ Router.post('/register', function (req, res) {
         return res.json({
           code: 0,
           data: {
-            enterprise_id,
-            enterprise_name,
-            contacts,
+            user_id: enterprise_id,
+            enterprise: {
+              enterprise_name,
+              contacts
+            },
             type
           }
         })
@@ -66,9 +69,11 @@ Router.post('/register', function (req, res) {
         return res.json({
           code: 0,
           data: {
-            personal_id,
-            lease_status,
-            nickname,
+            user_id: personal_id,
+            personal: {
+              lease_status,
+              nickname
+            },
             type
           }
         })
@@ -76,6 +81,131 @@ Router.post('/register', function (req, res) {
     })
   }
 })
+
+
+Router.post('/login', function (req, res) {
+  const { user_id, password, type } = req.body;
+  if (type) {
+    Enterprise.findOne({ enterprise_id: user_id }, _filer, function (err, doc) {
+      if (!doc) {
+        return res.json({
+          code: 1,
+          msg: "该企业用户不存在"
+        })
+      }
+      Enterprise.findOne({ enterprise_id: user_id, password: utils.md5pwd(password) }, _filer, function (e, d) {
+        if (!d) {
+          return res.json({
+            code: 1,
+            msg: "密码不正确"
+          })
+        }
+        const { enterprise_id, enterprise_name, contacts, type, _id } = d
+        res.cookie('u_id', d._id)
+        res.cookie('u_type', type)
+        return res.json({
+          code: 0,
+          data: {
+            user_id: enterprise_id,
+            enterprise: {
+              enterprise_name,
+              contacts
+            },
+            type
+          }
+        })
+      })
+    })
+  } else {
+    Personal.findOne({ personal_id: user_id }, _filer, function (err, doc) {
+      if (!doc) {
+        return res.json({
+          code: 1,
+          msg: "该个人用户名不存在"
+        })
+      }
+      Personal.findOne({ personal_id: user_id, password: utils.md5pwd(password) }, _filer, function (e, d) {
+        if (!d) {
+          return res.json({
+            code: 1,
+            msg: "密码不正确"
+          })
+        }
+        const { personal_id, nickname, type, lease_status, _id } = d
+        res.cookie('u_id', d._id)
+        res.cookie('u_type', type)
+        return res.json({
+          code: 0,
+          data: {
+            user_id: personal_id,
+            personal: {
+              lease_status,
+              nickname
+            },
+            type
+          }
+        })
+      })
+    })
+  }
+})
+Router.post('/info', function (req, res) {
+  const { u_id, u_type} = req.cookies;
+  if (!u_id) {
+    return res.json({
+      code: 1
+    });
+  }
+  if (u_type == 1){
+    Enterprise.findOne({ _id: u_id }, _filer, function (err, doc) {
+      if (err) {
+        return res.json({
+          code: 1,
+          msg: "服务端出错了"
+        });
+      }
+      if (doc) {
+        const { enterprise_id, enterprise_name, contacts, type, _id } = doc
+        return res.json({
+          code: 0,
+          data: {
+            user_id: enterprise_id,
+            enterprise: {
+              enterprise_name,
+              contacts
+            },
+            type
+          }
+        })
+      }
+    })
+  } else {
+    Personal.findOne({ _id: u_id }, _filer, function (err, doc) {
+      if (err) {
+        return res.json({
+          code: 1,
+          msg: "服务端出错了"
+        });
+      }
+      if (doc) {
+        const { personal_id, nickname, type, lease_status, _id } = doc
+        return res.json({
+          code: 0,
+          data: {
+            user_id: personal_id,
+            personal: {
+              lease_status,
+              nickname
+            },
+            type
+          }
+        })
+      }
+    })
+  }
+})
+
+
 
 
 module.exports = Router

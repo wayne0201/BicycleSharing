@@ -11,13 +11,14 @@
       </mt-cell>
     </div>
     <div class="login-btn">
-      <mt-button type="primary" size="large">登录</mt-button>
+      <mt-button type="primary" size="large" @click="sumbit">登录</mt-button>
       <mt-button type="primary" size="large" plain @click="toRegister">注册</mt-button>
     </div>
   </div>
 </template>
 
 <script>
+import { mapActions, mapState} from 'vuex'
 export default {
   name: 'Login',
   data () {
@@ -27,9 +28,31 @@ export default {
       type: false
     }
   },
+  computed: {
+    ...mapState({
+      user: state => state.user
+    })
+  },
   methods: {
+    ...mapActions(["doLogin"]),
     toRegister() {
       this.$router.push('/register');
+    },
+    sumbit() {
+      let params = {
+        user_id: this.userId,
+        type: Number(this.type),
+        password: this.password,
+      }
+      this.doLogin({
+        params,
+        onSuccess: () => {
+          this.$router.push("/")
+        },
+        onFail: () => {
+          Toast(this.user.msg)
+        }
+      })
     }
   }
 }

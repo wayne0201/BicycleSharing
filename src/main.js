@@ -15,6 +15,7 @@ Vue.use(MintUI)
 window.axios = axios
 
 window.MessageBox = MintUI.MessageBox
+window.Toast = MintUI.Toast
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
