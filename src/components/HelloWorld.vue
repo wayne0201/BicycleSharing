@@ -5,7 +5,6 @@
 </template>
 
 <script>
-import axios from "axios";
 export default {
   name: 'HelloWorld',
   data () {
@@ -14,13 +13,6 @@ export default {
     }
   },
   mounted() {
-    axios.get('/user/lll')
-      .then(res => {
-          if (res.status === 200 && res.data.code === 0){
-            console.log(res.data)
-          } else {
-          }
-      })
   }
 }
 </script>
