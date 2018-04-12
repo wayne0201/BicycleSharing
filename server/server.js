@@ -1,4 +1,6 @@
-const express = require('express')
+const express = require("express")
+const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
 
 const utils = require("../build/utils")
 const model = require("./model")
@@ -11,7 +13,9 @@ app.get('/', function (req, res) {
   res.send("<h1>hello world</h1>")
 })
 
-
+app.use(cookieParser());
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }))
 app.use('/user', userRouter)
 
 let host = utils.getIPAdress()

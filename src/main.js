@@ -4,6 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import store from './store'
+import axios from "axios"
 import MintUI from 'mint-ui'
 import '../static/reset.css'
 import 'mint-ui/lib/style.css'
@@ -11,6 +12,9 @@ import "./config";
 
 Vue.use(MintUI)
 
+window.axios = axios
+
+window.MessageBox = MintUI.MessageBox
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

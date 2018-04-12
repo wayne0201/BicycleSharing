@@ -4,8 +4,8 @@
       <img src="../assets/logo.png" alt="logo">
     </div>
     <div class="login-field">
-      <mt-field label="账号" placeholder="请输入账号" v-model="userId"></mt-field>
-      <mt-field label="密码" placeholder="请输入密码" type="password" v-model="password"></mt-field>
+      <mt-field label="账号" placeholder="请输入账号" v-model.trim="userId"></mt-field>
+      <mt-field label="密码" placeholder="请输入密码" type="password" v-model.trim="password"></mt-field>
       <mt-cell title="是否企业登录">
         <mt-switch v-model="type"></mt-switch>
       </mt-cell>
@@ -18,7 +18,6 @@
 </template>
 
 <script>
-// import { Field } from "mint-ui";
 export default {
   name: 'Login',
   data () {
