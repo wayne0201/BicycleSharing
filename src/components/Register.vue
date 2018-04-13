@@ -50,33 +50,33 @@ export default {
     ...mapActions(["doRegister"]),
     validate() {
       let idRe = /^[a-zA-z]\w{3,15}$/
-      let pwdRe = /\w{3,15}$/
+      let pwdRe = /\w{4,15}$/
       if(!idRe.test(this.userId)){
-        MessageBox('请输入符合格式的账号', '4-16位字母、数字、下划线组成，字母开头');
-        return;
+        MessageBox('请输入符合格式的账号', '4-16位字母、数字、下划线组成，字母开头')
+        return
       } else if (!pwdRe.test(this.password)){
-        MessageBox('请输入符合格式的密码', '4-16位字母、数字、下划线组成');
-        return;
+        MessageBox('请输入符合格式的密码', '4-16位字母、数字、下划线组成')
+        return
       }
       if(this.type){
         if(!this.enterpriseName) {
-          MessageBox('请输入公司名称', '公司名称不能为空');
-          return;
+          MessageBox('请输入公司名称', '公司名称不能为空')
+          return
         } else if (!this.contacts) {
-          MessageBox('请输入公司联系', '公司联系人不能为空');
-          return;
+          MessageBox('请输入公司联系', '公司联系人不能为空')
+          return
         }
       } else {
         if(!this.nickname) {
-          MessageBox('请输入个人昵称', '个人昵称不能为空');
-          return;
+          MessageBox('请输入个人昵称', '个人昵称不能为空')
+          return
         }
       }
-      return true;
+      return true
     },
     submit() {
-      if(!this.validate()) return;
-      let params = null;
+      if(!this.validate()) return
+      let params = null
       if(this.type) {
         params = {
           enterprise_id: this.userId,

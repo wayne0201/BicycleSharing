@@ -3,18 +3,22 @@ import {
   ERROR_MSG
 } from '../constants';
 
-const state = {
-  type:0,
+const init = {
+  type: 0,
   user_id: "",
   enterprise: {
     enterprise_name: "",
     contacts: ""
   },
   personal: {
-    lease_status: "",
+    lease_status: false,
     nickname: "",
   },
   msg: ""
+}
+
+const state = {
+  ...init
 }
 
 const getters = {
@@ -71,6 +75,9 @@ const mutations = {
   },
   [ERROR_MSG](state ,msg){
     Object.assign(state, { msg })
+  },
+  logoutSumbit(state) {
+    Object.assign(state, init)
   }
 }
 

@@ -1,16 +1,18 @@
 <template>
   <div id="app">
     <keep-alive>
-      <router-view/>
+      <router-view class="page"/>
     </keep-alive>
-    <mt-tabbar v-model="route" v-if="hasTab">
-      <template v-for="(item, index) in tabList">
-        <mt-tab-item :id="item.path"  :key="index">
-          <img :src="item.icon" slot="icon" >
-          {{item.name}}
-        </mt-tab-item>
-      </template>
-    </mt-tabbar>
+    <div class="tab" v-if="hasTab">
+      <mt-tabbar v-model="route">
+        <template v-for="(item, index) in tabList">
+          <mt-tab-item :id="item.path"  :key="index">
+            <img :src="item.icon" slot="icon">
+            {{item.name}}
+          </mt-tab-item>
+        </template>
+      </mt-tabbar>
+    </div>
   </div>
 </template>
 
@@ -98,5 +100,13 @@ export default {
   box-sizing: border-box;
   overflow: hidden;
   background: #f8f8f8;
+  display: flex;
+  flex-direction:column;
+}
+#app .page{
+  flex: 1;
+}
+#app .tab{
+  height: 55px;
 }
 </style>

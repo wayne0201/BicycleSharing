@@ -22,7 +22,7 @@ Router.post('/register', function (req, res) {
       if (doc) {
         return res.json({
           code: 1,
-          msg: "该企业账号已注册"
+          msg: "该企业账号已注册!"
         })
       }
       const enterpriseModel = new Enterprise({ enterprise_id, enterprise_name, contacts, type, password: utils.md5pwd(password)})
@@ -30,7 +30,7 @@ Router.post('/register', function (req, res) {
         if (e) {
           return res.json({
             code: 1,
-            msg: "后端出错了"
+            msg: "后端出错了!"
           })
         }
         const { enterprise_id, enterprise_name, contacts, type, _id} = d
@@ -55,7 +55,7 @@ Router.post('/register', function (req, res) {
       if (doc) {
         return res.json({
           code: 1,
-          msg: "该个人账号已注册"
+          msg: "该个人账号已注册!"
         })
       }
       const personalModel = new Personal({ personal_id, nickname, type, password: utils.md5pwd(password) })
@@ -63,7 +63,7 @@ Router.post('/register', function (req, res) {
         if (e) {
           return res.json({
             code: 1,
-            msg: "后端出错了"
+            msg: "后端出错了!"
           })
         }
         const { personal_id, nickname, type, lease_status, _id } = d
@@ -93,14 +93,14 @@ Router.post('/login', function (req, res) {
       if (!doc) {
         return res.json({
           code: 1,
-          msg: "该企业用户不存在"
+          msg: "该企业用户不存在!"
         })
       }
       Enterprise.findOne({ enterprise_id: user_id, password: utils.md5pwd(password) }, _filer, function (e, d) {
         if (!d) {
           return res.json({
             code: 1,
-            msg: "密码不正确"
+            msg: "密码不正确!"
           })
         }
         const { enterprise_id, enterprise_name, contacts, type, _id } = d
@@ -124,14 +124,14 @@ Router.post('/login', function (req, res) {
       if (!doc) {
         return res.json({
           code: 1,
-          msg: "该个人用户名不存在"
+          msg: "该个人用户名不存在!"
         })
       }
       Personal.findOne({ personal_id: user_id, password: utils.md5pwd(password) }, _filer, function (e, d) {
         if (!d) {
           return res.json({
             code: 1,
-            msg: "密码不正确"
+            msg: "密码不正确!"
           })
         }
         const { personal_id, nickname, type, lease_status, _id } = d
@@ -164,7 +164,7 @@ Router.post('/info', function (req, res) {
       if (err) {
         return res.json({
           code: 1,
-          msg: "服务端出错了"
+          msg: "服务端出错了!"
         });
       }
       if (doc) {
@@ -187,7 +187,7 @@ Router.post('/info', function (req, res) {
       if (err) {
         return res.json({
           code: 1,
-          msg: "服务端出错了"
+          msg: "服务端出错了!"
         });
       }
       if (doc) {
@@ -204,6 +204,65 @@ Router.post('/info', function (req, res) {
           }
         })
       }
+    })
+  }
+})
+Router.post('/changePwd', function (req, res) {
+  const { u_id, u_type } = req.cookies
+  const { oldPassword, password } = req.body
+  if (u_type == 1) {
+    Enterprise.findOne({ _id: u_id }, function (err, doc) {
+      if(err){
+        return res.json({
+          code: 1,
+          msg: '服务端出错了!'
+        })
+      }
+      if (utils.md5pwd(oldPassword) !== doc.password){
+        return res.json({
+          code: 1,
+          msg: '旧密码输入错误!'
+        })
+      }
+      Enterprise.updateOne({ _id: u_id }, { $set: { password: utils.md5pwd(password) }}, function (e, d) {
+        if(e){
+          return res.json({
+            code: 1,
+            msg: '修改失败，请重试!'
+          })
+        }
+        return res.json({
+          code: 0,
+          msg: '密码修改成功!'
+        })
+      })
+    })
+  } else {
+    Personal.findOne({ _id: u_id }, function (err, doc) {
+      if (err) {
+        return res.json({
+          code: 1,
+          msg: '服务端出错了!'
+        })
+      }
+      if (utils.md5pwd(oldPassword) !== doc.password) {
+        return res.json({
+          code: 1,
+          msg: '旧密码输入错误!'
+        })
+      }
+      Personal.updateOne({ _id: u_id }, { $set: { password: utils.md5pwd(password)} }, function (e, d) {
+        if (e) {
+          return res.json({
+            code: 1,
+            msg: '修改失败，请重试!'
+          })
+        }
+        return res.json({
+          code: 0,
+          msg: '密码修改成功!'
+        })
+      })
     })
   }
 })
