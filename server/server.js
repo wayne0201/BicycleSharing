@@ -5,6 +5,7 @@ const cookieParser = require("cookie-parser");
 const utils = require("../build/utils")
 const model = require("./model")
 const userRouter = require("./user")
+const getData = require("./data")
 
 const app = express()
 const server = require("http").Server(app)
@@ -17,6 +18,7 @@ app.use(cookieParser());
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use('/user', userRouter)
+app.use('/data', getData)
 
 let host = utils.getIPAdress()
 //后台端口9000

@@ -38,7 +38,20 @@ export default {
     toRegister() {
       this.$router.push('/register');
     },
+    validate() {
+      let idRe = /^[a-zA-z]\w{3,15}$/
+      let pwdRe = /\w{3,15}$/
+      if(!idRe.test(this.userId)){
+        MessageBox('请输入符合格式的账号', '4-16位字母、数字、下划线组成，字母开头');
+        return;
+      } else if (!pwdRe.test(this.password)){
+        MessageBox('请输入符合格式的密码', '4-16位字母、数字、下划线组成');
+        return;
+      }
+      return true
+    },
     sumbit() {
+      if(!this.validate()) return
       let params = {
         user_id: this.userId,
         type: Number(this.type),

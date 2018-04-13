@@ -1,15 +1,18 @@
 const express = require("express")
-const model = require("./model")
-const utils = require("./utils")
-
 const Router = express.Router()
 
+
+const model = require("./model")
 const Personal = model.getModel('personalUser')
 const Enterprise = model.getModel('enterpriseUser')
 const Order = model.getModel('order')
 const Bicycle = model.getModel('bicycle')
 
+
+const utils = require("./utils")
 const _filer = { password: 0, __v: 0 };
+
+
 
 Router.post('/register', function (req, res) {
   const params = req.body;
