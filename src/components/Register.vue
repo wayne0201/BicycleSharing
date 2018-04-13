@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex'
+import { mapActions, mapState, mapGetters } from 'vuex'
 export default {
   name: 'Register',
   data () {
@@ -43,7 +43,8 @@ export default {
   computed: {
     ...mapState({
       user: state => state.user
-    })
+    }),
+    ...mapGetters(["isEnterprise"])
   },
   methods: {
     ...mapActions(["doRegister"]),
@@ -95,7 +96,11 @@ export default {
       this.doRegister({
         params,
         onSuccess: () => {
-          this.$router.push("/")
+          if(this.isEnterprise){
+            return this.$router.push("/list")
+          } else {
+            return this.$router.push("/bicycle")
+          }
         },
         onFail: () => {
           Toast(this.user.msg)

@@ -3,19 +3,84 @@
     <keep-alive>
       <router-view/>
     </keep-alive>
+    <mt-tabbar v-model="route" v-if="hasTab">
+      <template v-for="(item, index) in tabList">
+        <mt-tab-item :id="item.path"  :key="index">
+          <img :src="item.icon" slot="icon" >
+          {{item.name}}
+        </mt-tab-item>
+      </template>
+    </mt-tabbar>
   </div>
 </template>
 
 <script>
-import { mapActions} from 'vuex'
+import { mapActions, mapState, mapGetters} from 'vuex'
 export default {
   name: 'App',
+  data() {
+    return {
+      route: this.$route.path,
+      routeList: [
+        [{
+          path: '/bicycle',
+          icon: require('./assets/bicycle-icon.png'),
+          name: '单车'
+        },{
+          path: '/order',
+          icon: require('./assets/order-icon.png'),
+          name: '订单'
+        }, {
+          path: '/me',
+          icon: require('./assets/me-icon.png'),
+          name: '我的'
+        }],
+        [{
+          path: '/list',
+          icon: require('./assets/list-icon.png'),
+          name: '列表'
+        },{
+          path: '/manage',
+          icon: require('./assets/manage-icon.png'),
+          name: '管理'
+        }, {
+          path: '/me',
+          icon: require('./assets/me-icon.png'),
+          name: '我的'
+        }]
+      ]
+    }
+  },
+  computed: {
+    ...mapGetters(['isEnterprise']),
+    hasTab() {
+      return this.routeList[0].filter(v => v.path === this.$route.path).length || this.routeList[1].filter(v => v.path === this.$route.path).length
+    },
+    tabList() {
+      if(this.isEnterprise){
+        return this.routeList[1]
+      } else {
+        return this.routeList[0]
+      }
+    },
+  },
   methods:{
     ...mapActions(["getInfo"])
   },
+  watch: {
+    route(val, oldVal) {
+      this.$router.push(val)
+    }
+  },
   mounted() {
     this.getInfo({
-      onSuccess: () => this.$router.push("/"),
+      onSuccess: () => {
+        if(this.isEnterprise){
+          return this.$router.push("/list")
+        } else {
+          return this.$router.push("/bicycle")
+        }
+      },
       onFail: () => this.$router.push("/login")
     })
   }

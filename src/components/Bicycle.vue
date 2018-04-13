@@ -1,5 +1,5 @@
 <template>
-  <div class="hello">
+  <div class="bicycle-page">
     {{val}}
   </div>
 </template>
@@ -7,16 +7,13 @@
 <script>
 import { mapActions, mapState, mapGetters} from 'vuex'
 export default {
-  name: 'HelloWorld',
+  name: 'Bicycle',
   data () {
     return {
-      val: "Hello World!"
+      val: "bicycle!"
     }
   },
   computed: {
-    ...mapState({
-      user: state => state.user
-    })
   },
   mounted() {
   }
