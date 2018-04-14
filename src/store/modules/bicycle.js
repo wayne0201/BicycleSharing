@@ -1,7 +1,8 @@
 import {
   RENT_BICYCLE,
   CHANG_LEASE_STATUS,
-  ERROR_MSG
+  ERROR_MSG,
+  INIT_BICYCLE
 } from '../constants';
 
 const init = {
@@ -47,12 +48,43 @@ const actions = {
         onFail && onFail()
       }
     })
+  },
+  returnBicycle({ commit, state, dispatch }, { params, onSuccess, onFail }){
+    axios.post('/bicycle/returnBicycle', params).then(res => {
+      if (res.status === 200 && res.data.code === 0) {
+        let data = res.data
+        commit(CHANG_LEASE_STATUS, data.lease_status)
+        commit(INIT_BICYCLE)
+        onSuccess && onSuccess(data.end_time)
+      } else {
+        let msg = res.data.msg
+        commit(ERROR_MSG, msg)
+        onFail && onFail()
+      }
+    })
+  },
+  warning({ commit, state, dispatch }, { params, onSuccess, onFail }) {
+    axios.post('/bicycle/warning', params).then(res => {
+      if (res.status === 200 && res.data.code === 0) {
+        let data = res.data
+        commit(CHANG_LEASE_STATUS, data.lease_status)
+        commit(INIT_BICYCLE)
+        onSuccess && onSuccess(data.end_time)
+      } else {
+        let msg = res.data.msg
+        commit(ERROR_MSG, msg)
+        onFail && onFail()
+      }
+    })
   }
 }
 
 const mutations = {
   [RENT_BICYCLE](state, data){
     Object.assign(state, data)
+  },
+  [INIT_BICYCLE](state) {
+    Object.assign(state, init)
   }
 }
 

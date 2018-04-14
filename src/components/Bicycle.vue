@@ -38,8 +38,8 @@
       </div>
 
       <div class="bicycle-order-btn">
-        <mt-button type="danger" size="large" >单车报障</mt-button>
-        <mt-button type="default" size="large" >归还单车</mt-button>
+        <mt-button type="danger" size="large" @click="warningFn">单车报障</mt-button>
+        <mt-button type="default" size="large" @click="returnBicycleFn">归还单车</mt-button>
       </div>
     </div>
 
@@ -77,7 +77,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["rentBicycle", "getOrder"]),
+    ...mapActions(["rentBicycle", "getOrder", "returnBicycle", "warning"]),
     keyFn(e){
       if(e.keyCode === 13) {
         this.sumbit()
@@ -97,6 +97,45 @@ export default {
           Toast(this.user.msg)
         }
       })
+    },
+    returnBicycleFn(){
+      MessageBox.confirm('确定归还单车?').then(action => {
+        let params ={
+          bicycle_id: this.bicycle.bicycle_id,
+          order_id: this.bicycle.order_id,
+          personal_id: this.user.user_id
+        }
+        this.returnBicycle({
+          params,
+          onSuccess: (endTime) => {
+            let time = new Date(endTime)
+            MessageBox("骑行结束", time.getFullYear() + "/"+ (time.getMonth() + 1) + "/"+ time.getDate() + "/ "+time.getHours() + "点" + time.getMinutes() + "分")
+          },
+          onFail:() => {
+            Toast(this.user.msg)
+          }
+        })
+      }, () => {})
+    },
+    warningFn() {
+      MessageBox.prompt('单车在使用过程中有哪些故障？', '单车报障').then(({ value, action }) => {
+        let params ={
+          bicycle_id: this.bicycle.bicycle_id,
+          order_id: this.bicycle.order_id,
+          personal_id: this.user.user_id,
+          warning_content: value
+        }
+        this.warning({
+          params,
+          onSuccess: (endTime) => {
+            let time = new Date(endTime)
+            MessageBox("报障成功，骑行结束", time.getFullYear() + "/"+ (time.getMonth() + 1) + "/"+ time.getDate() + "/ "+time.getHours() + "点" + time.getMinutes() + "分")
+          },
+          onFail:() => {
+            Toast(this.user.msg)
+          }
+        })
+      }, () => {})
     }
   },
   mounted() {

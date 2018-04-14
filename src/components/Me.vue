@@ -69,7 +69,7 @@ export default {
         browserCookies.erase('u_type')
         this.logoutSumbit()
         this.$router.push("/login")
-      })
+      }, () => {})
     }
   }
 }

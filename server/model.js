@@ -74,6 +74,9 @@ const model = {
     },
     end_time: {
       type: Number
+    },
+    warning_content: {
+      type: String
     }
   },
   bicycle: {
@@ -95,6 +98,9 @@ const model = {
     bicycle_status: {
       type: Number,
       default: 0
+    },
+    warning_content: {
+      type: String
     }
   }
 }
