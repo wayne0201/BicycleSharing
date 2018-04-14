@@ -44,11 +44,8 @@ export default {
     ...mapState({
       user: state => state.user
     }),
-    ...mapGetters(["isEnterprise"])
-  },
-  methods: {
-    ...mapActions(["doRegister"]),
-    validate() {
+    ...mapGetters(["isEnterprise"]),
+     validate() {
       let idRe = /^[a-zA-z]\w{3,15}$/
       let pwdRe = /\w{4,15}$/
       if(!idRe.test(this.userId)){
@@ -73,9 +70,12 @@ export default {
         }
       }
       return true
-    },
+    }
+  },
+  methods: {
+    ...mapActions(["doRegister"]),
     submit() {
-      if(!this.validate()) return
+      if(!this.validate) return
       let params = null
       if(this.type) {
         params = {

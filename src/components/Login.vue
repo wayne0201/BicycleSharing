@@ -32,13 +32,7 @@ export default {
     ...mapState({
       user: state => state.user
     }),
-    ...mapGetters(["isEnterprise"])
-  },
-  methods: {
-    ...mapActions(["doLogin"]),
-    toRegister() {
-      this.$router.push('/register')
-    },
+    ...mapGetters(["isEnterprise"]),
     validate() {
       let idRe = /^[a-zA-z]\w{3,15}$/
       let pwdRe = /\w{4,15}$/
@@ -50,9 +44,15 @@ export default {
         return
       }
       return true
+    }
+  },
+  methods: {
+    ...mapActions(["doLogin"]),
+    toRegister() {
+      this.$router.push('/register')
     },
     sumbit() {
-      if(!this.validate()) return
+      if(!this.validate) return
       let params = {
         user_id: this.userId,
         type: Number(this.type),

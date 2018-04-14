@@ -21,7 +21,7 @@
       </mt-cell>
     </div>
     <div class="me-item">
-      <mt-cell title="修改资料" is-link></mt-cell>
+      <mt-cell title="修改资料" to="/modifyInfo" is-link></mt-cell>
       <mt-cell title="修改密码" to="/modifyPwd" is-link replace></mt-cell>
     </div>
     <div class="me-btn">

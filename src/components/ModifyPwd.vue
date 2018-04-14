@@ -1,13 +1,11 @@
 <template>
   <div class="modify-pwd-page">
     <mt-header title="修改密码">
-      <router-link to="/me" slot="left">
-        <mt-button icon="back">返回</mt-button>
-      </router-link>
+      <mt-button icon="back"  slot="left" @click="disChange">返回</mt-button>
     </mt-header>
     <div class="modify-pwd-box">
-      <mt-field label="旧密码" placeholder="请输入旧密码" v-model="oldPassword" type="password"></mt-field>
-      <mt-field label="新密码" placeholder="请输入新密码" v-model="password" type="password"></mt-field>
+      <mt-field label="旧密码" placeholder="请输入旧密码" v-model.trim="oldPassword" type="password"></mt-field>
+      <mt-field label="新密码" placeholder="请输入新密码" v-model.trim="password" type="password"></mt-field>
     </div>
     <div class="modify-pwd-btn">
       <mt-button type="primary" size="large" @click="changePwd">确认修改</mt-button>
@@ -28,12 +26,7 @@ export default {
     }
   },
   computed: {
-  },
-  methods: {
-    ...mapMutations(['logoutSumbit']),
-    disChange() {
-      this.$router.push("/me")
-    },
+    ...mapGetters(["isEnterprise"]),
     validate() {
       let pwdRe = /\w{4,15}$/
       if(!pwdRe.test(this.oldPassword)){
@@ -44,9 +37,16 @@ export default {
         return
       }
       return true
+    }
+  },
+  methods: {
+    ...mapMutations(['logoutSumbit']),
+    disChange() {
+      this.$router.go(-1)
     },
+
     changePwd() {
-      if(!this.validate()) return
+      if(!this.validate) return
       let { oldPassword, password } = this
       axios.post('/user/changePwd', {
         oldPassword,

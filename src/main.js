@@ -8,7 +8,7 @@ import axios from "axios"
 import MintUI from 'mint-ui'
 import '../static/reset.css'
 import 'mint-ui/lib/style.css'
-import "./config";
+import "./config"
 
 Vue.use(MintUI)
 

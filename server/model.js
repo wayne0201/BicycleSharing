@@ -66,7 +66,7 @@ const model = {
     },
     order_status: {
       type: String,
-      default: 0
+      default: 1
     },
     create_time: {
       type: Number,
@@ -94,7 +94,7 @@ const model = {
     },
     bicycle_status: {
       type: Number,
-      default: 1
+      default: 0
     }
   }
 }

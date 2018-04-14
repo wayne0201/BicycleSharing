@@ -168,7 +168,7 @@ Router.post('/info', function (req, res) {
         });
       }
       if (doc) {
-        const { enterprise_id, enterprise_name, contacts, type, _id } = doc
+        const { enterprise_id, enterprise_name, contacts, type } = doc
         return res.json({
           code: 0,
           data: {
@@ -191,7 +191,7 @@ Router.post('/info', function (req, res) {
         });
       }
       if (doc) {
-        const { personal_id, nickname, type, lease_status, _id } = doc
+        const { personal_id, nickname, type, lease_status } = doc
         return res.json({
           code: 0,
           data: {
@@ -265,6 +265,55 @@ Router.post('/changePwd', function (req, res) {
       })
     })
   }
+})
+
+Router.post('/changeInfo', function (req, res) {
+  const { u_id, u_type } = req.cookies
+  const { enterpriseName, contacts, nickname } = req.body
+  if (u_type == 1) {
+    Enterprise.findByIdAndUpdate(u_id, {$set: { enterprise_name: enterpriseName, contacts }}, function (e, d) {
+      if (e) {
+        return res.json({
+          code: 1,
+          msg: '修改失败，请重试!'
+        })
+      }
+      const { enterprise_id, type } = d
+      return res.json({
+        code: 0,
+        data: {
+          user_id: enterprise_id,
+          enterprise: {
+            enterprise_name: enterpriseName,
+            contacts
+          },
+          type
+        }
+      })
+    })
+  } else {
+    Personal.findByIdAndUpdate(u_id, { $set: { nickname } }, function (e, d) {
+      if (e) {
+        return res.json({
+          code: 1,
+          msg: '修改失败，请重试!'
+        })
+      }
+      const { personal_id, type, lease_status } = d
+      return res.json({
+        code: 0,
+        data: {
+          user_id: personal_id,
+          personal: {
+            lease_status,
+            nickname
+          },
+          type
+        }
+      })
+    })
+  }
+
 })
 
 

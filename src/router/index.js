@@ -9,6 +9,7 @@ const Me = () => import(/* webpackChunkName: "me" */ '@/components/Me')
 const List = () => import(/* webpackChunkName: "list" */ '@/components/List')
 const Manage = () => import(/* webpackChunkName: "manage" */ '@/components/Manage')
 const ModifyPwd = () => import(/* webpackChunkName: "modifyPwd" */ '@/components/ModifyPwd')
+const ModifyInfo = () => import(/* webpackChunkName: "modifyInfo" */ '@/components/ModifyInfo')
 
 Vue.use(Router)
 
@@ -23,6 +24,7 @@ export default new Router({
     { path: '/me', name: 'Me', component: Me },
     { path: '/list', name: 'List', component: List },
     { path: '/manage', name: 'Manage', component: Manage },
-    { path: '/modifyPwd', name: 'ModifyPwd', component: ModifyPwd }
+    { path: '/modifyPwd', name: 'ModifyPwd', component: ModifyPwd },
+    { path: '/modifyInfo', name: 'ModifyInfo', component: ModifyInfo }
   ]
 })

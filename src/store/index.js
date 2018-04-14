@@ -2,10 +2,12 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import user from './modules/user'
+import bicycle from './modules/bicycle'
 
 
 let modules = {
-  user
+  user,
+  bicycle
 }
 
 Vue.use(Vuex)

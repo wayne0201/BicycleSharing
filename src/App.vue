@@ -22,7 +22,6 @@ export default {
   name: 'App',
   data() {
     return {
-      route: this.$route.path,
       routeList: [
         [{
           path: '/bicycle',
@@ -65,6 +64,14 @@ export default {
         return this.routeList[0]
       }
     },
+    route: {
+      get: function () {
+        return this.$route.path
+      },
+      set: function (newValue) {
+        this.$router.push(newValue)
+      }
+    }
   },
   methods:{
     ...mapActions(["getInfo"])
@@ -108,5 +115,6 @@ export default {
 }
 #app .tab{
   height: 55px;
+  overflow: hidden;
 }
 </style>

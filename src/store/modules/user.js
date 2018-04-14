@@ -1,6 +1,7 @@
 import {
   AUTH_SUCCESS,
-  ERROR_MSG
+  ERROR_MSG,
+  CHANG_LEASE_STATUS
 } from '../constants';
 
 const init = {
@@ -67,6 +68,19 @@ const actions = {
       }
     })
   },
+  changeInfo({ commit, state, dispatch }, { params, onSuccess, onFail }) {
+    axios.post('/user/changeInfo', params).then(res => {
+      if (res.status === 200 && res.data.code === 0) {
+        let data = res.data.data
+        commit(AUTH_SUCCESS, data)
+        onSuccess && onSuccess()
+      } else {
+        let msg = res.data.msg
+        commit(ERROR_MSG, msg)
+        onFail && onFail()
+      }
+    })
+  }
 }
 
 const mutations = {
@@ -75,6 +89,9 @@ const mutations = {
   },
   [ERROR_MSG](state ,msg){
     Object.assign(state, { msg })
+  },
+  [CHANG_LEASE_STATUS](state, flag){
+    state.personal.lease_status = flag
   },
   logoutSumbit(state) {
     Object.assign(state, init)

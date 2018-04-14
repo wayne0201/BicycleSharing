@@ -13,7 +13,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: [
       {
-        context: "/user/*",
+        context: ["/user/*", "/bicycle/*"],
         target: 'http://127.0.0.1:9000',
         changeOrigin: true,
         secure: false
