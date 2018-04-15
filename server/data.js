@@ -8,6 +8,8 @@ const Enterprise = model.getModel('enterpriseUser')
 const Order = model.getModel('order')
 const Bicycle = model.getModel('bicycle')
 
+
+
 Router.get('/personal', function (req, res) {
   Personal.find({}, function (err, doc) {
     if (err) {

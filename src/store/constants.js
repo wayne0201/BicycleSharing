@@ -4,4 +4,8 @@ export const RENT_BICYCLE = "RENT_BICYCLE"
 export const CHANG_LEASE_STATUS = "CHANG_LEASE_STATUS"
 export const INIT_BICYCLE = "INIT_BICYCLE"
 
+export const GET_ORDER_LIST = "GET_ORDER_LIST"
+export const GET_ORDER_LIST_MORE = "GET_ORDER_LIST_MORE"
+
+
 

@@ -7,11 +7,14 @@
       <img src="../assets/logo.png" alt="logo">
     </div>
     <div class="bicycle-rent" v-if="!user.personal.lease_status">
+      <div class="slogen">
+        随借随还 自由骑行
+      </div>
       <div class="bicycle-field">
         <mt-field placeholder="请输入六位单车编号" @keypress.native="keyFn($event)" v-model.trim="bicycle_id"></mt-field>
       </div>
       <div class="bicycle-field-btn">
-        <mt-button type="primary" size="large" @click="sumbit">租车</mt-button>
+        <mt-button type="default" size="large" @click="sumbit">租车</mt-button>
       </div>
     </div>
     <div class="bicycle-order" v-else>
@@ -156,10 +159,14 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .bicycle-page{
-  background: #80c0f1;
+  background: #26a2ff;
 }
-.mint-header{
-  background: #80c0f1;
+.slogen{
+  text-align: center;
+  font-size: 30px;
+  font-weight: 700;
+  color: #fff;
+  padding-bottom: 40px;
 }
 .logo{
   text-align: center;
@@ -169,14 +176,12 @@ export default {
   height: 200px;
   border-radius: 100%;
   border: 4px solid #fff;
-  background: #26a2ff;
-
 }
 .logo img{
   width: 100%;
 }
 .bicycle-rent{
-  padding: 40px 60px;
+  padding: 20px 20px;
 }
 .bicycle-order{
   display: flex;

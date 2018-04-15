@@ -112,6 +112,9 @@ export default {
 }
 #app .page{
   flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 #app .tab{
   height: 55px;

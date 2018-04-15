@@ -171,6 +171,32 @@ Router.post('/warning', function (req, res) {
   })
 })
 
+Router.post('/order', function (req, res) {
+  let { personal_id, size, page} = req.body
+  size = parseInt(size) || 10
+  page = parseInt(page) || 1
+  Order.find({ personal_id }, { _id: 0, __v: 0 }, function (err, doc) {
+    if (err) {
+      return res.json({
+        code: 1,
+        msg: err
+      })
+    }
+    if(doc.length < size) {
+      return res.json({
+        code: 0,
+        data: doc,
+        next: 0
+      })
+    }
+    return res.json({
+      code: 0,
+      data: doc,
+      next: 1
+    })
+  }).sort({ 'create_time': -1 }).skip((page-1) * size).limit(size).exec()
+})
+
 
 
 module.exports = Router
