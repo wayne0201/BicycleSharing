@@ -334,7 +334,6 @@ Router.post('/detail', function (req, res) {
       })
     }
     Order.count({ bicycle_id },function (err, doc) {
-      console.log(doc)
       if (err) {
         return res.json({
           code: 1,
