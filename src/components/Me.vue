@@ -22,7 +22,7 @@
     </div>
     <div class="me-item">
       <mt-cell title="修改资料" to="/modifyInfo" is-link></mt-cell>
-      <mt-cell title="修改密码" to="/modifyPwd" is-link replace></mt-cell>
+      <mt-cell title="修改密码" to="/modifyPwd" is-link></mt-cell>
     </div>
     <div class="me-btn">
       <mt-button type="danger" size="large" @click="logout">退出登录</mt-button>
@@ -62,7 +62,7 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(['logoutSumbit']),
+    ...mapActions(['logoutSumbit']),
     logout() {
       MessageBox.confirm('确认退出登录吗?', '注销').then(action => {
         browserCookies.erase('u_id')

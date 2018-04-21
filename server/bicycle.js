@@ -57,17 +57,46 @@ Router.post("/rentBicycle", function (req, res) {
                 msg: "后端出错了!"
               })
             }
-            return res.json({
-              code: 0,
-              data: {
-                bicycle_id: d.bicycle_id,
-                bicycle_pwd: doc.bicycle_pwd,
-                order_id: d.order_id,
-                order_status: d.order_status,
-                create_time: d.create_time,
-                lease_status: true
+            Order.find({ personal_id: user_id }, { _id: 0, __v: 0 }, function (err4, doc4) {
+              if (err4) {
+                return res.json({
+                  code: 1,
+                  msg: err4
+                })
               }
-            })
+              if (doc4.length < 5) {
+                return res.json({
+                  code: 0,
+                  order: {
+                    data: doc4,
+                    next: 0
+                  },
+                  data: {
+                    bicycle_id: d.bicycle_id,
+                    bicycle_pwd: doc.bicycle_pwd,
+                    order_id: d.order_id,
+                    order_status: d.order_status,
+                    create_time: d.create_time,
+                    lease_status: true
+                  }
+                })
+              }
+              return res.json({
+                code: 0,
+                order: {
+                  data: doc4,
+                  next: 1
+                },
+                data: {
+                  bicycle_id: d.bicycle_id,
+                  bicycle_pwd: doc.bicycle_pwd,
+                  order_id: d.order_id,
+                  order_status: d.order_status,
+                  create_time: d.create_time,
+                  lease_status: true
+                }
+              })
+            }).sort({ 'create_time': -1 }).skip(0).limit(5).exec()
           })
         })
       })
@@ -128,11 +157,34 @@ Router.post('/returnBicycle', function (req, res) {
             msg: "后端出错了!"
           })
         }
-        return res.json({
-          code: 0,
-          lease_status: false,
-          end_time,
-        })
+        Order.find({ personal_id }, { _id: 0, __v: 0 }, function (err4, doc4) {
+          if (err4) {
+            return res.json({
+              code: 1,
+              msg: err4
+            })
+          }
+          if (doc4.length < 5) {
+            return res.json({
+              code: 0,
+              data: {
+                data: doc4,
+                next: 0
+              },
+              lease_status: false,
+              end_time,
+            })
+          }
+          return res.json({
+            code: 0,
+            data: {
+              data: doc4,
+              next: 1
+            },
+            lease_status: false,
+            end_time
+          })
+        }).sort({ 'create_time': -1 }).skip(0).limit(5).exec()
       })
     })
   })
@@ -161,11 +213,34 @@ Router.post('/warning', function (req, res) {
             msg: "后端出错了!"
           })
         }
-        return res.json({
-          code: 0,
-          lease_status: false,
-          end_time,
-        })
+        Order.find({ personal_id }, { _id: 0, __v: 0 }, function (err4, doc4) {
+          if (err4) {
+            return res.json({
+              code: 1,
+              msg: err4
+            })
+          }
+          if (doc4.length < 5) {
+            return res.json({
+              code: 0,
+              data: {
+                data: doc4,
+                next: 0
+              },
+              lease_status: false,
+              end_time,
+            })
+          }
+          return res.json({
+            code: 0,
+            data: {
+              data: doc4,
+              next: 1
+            },
+            lease_status: false,
+            end_time
+          })
+        }).sort({ 'create_time': -1 }).skip(0).limit(5).exec()
       })
     })
   })
@@ -173,7 +248,7 @@ Router.post('/warning', function (req, res) {
 
 Router.post('/order', function (req, res) {
   let { personal_id, size, page} = req.body
-  size = parseInt(size) || 10
+  size = parseInt(size) || 5
   page = parseInt(page) || 1
   Order.find({ personal_id }, { _id: 0, __v: 0 }, function (err, doc) {
     if (err) {

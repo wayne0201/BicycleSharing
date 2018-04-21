@@ -1,7 +1,8 @@
 import {
   ERROR_MSG,
   GET_ORDER_LIST,
-  GET_ORDER_LIST_MORE
+  GET_ORDER_LIST_MORE,
+  INIT_ORDER
 } from '../constants';
 
 const init = {
@@ -50,12 +51,15 @@ const mutations = {
   [GET_ORDER_LIST](state, data){
     state.order_list = data.data
     state.next = data.next
-    ++state.page
+    state.page = 2
   },
   [GET_ORDER_LIST_MORE](state, data) {
     state.order_list = [...state.order_list, ...data.data]
     state.next = data.next
     ++state.page
+  },
+  [INIT_ORDER](state) {
+    Object.assign(state, init)
   }
 }
 

@@ -53,7 +53,7 @@ Router.get('/order', function (req, res) {
   })
 })
 Router.get('/bicycle', function (req, res) {
-  Bicycle.find({}, function (err, doc) {
+  Bicycle.find({ enterprise_id: "enterprise000008"}, function (err, doc) {
     if (err) {
       return res.json({
         code: 1,

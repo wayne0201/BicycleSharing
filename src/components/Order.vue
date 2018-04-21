@@ -4,7 +4,7 @@
       <span slot="left" class="header-left">骑行订单</span>
     </mt-header>
     <div class="order-body">
-      <mt-loadmore :top-method="loadTop" ref="loadmore">
+      <mt-loadmore :top-method="loadTop" ref="loadmore" v-if="list.length > 0">
         <ul
           v-infinite-scroll="loadMore"
           infinite-scroll-disabled="loading"
@@ -45,7 +45,8 @@ export default {
   data () {
     return {
       classList:["success", "rent", "warning"],
-      statusList: ["已归还", "正在使用", "故障"]
+      statusList: ["已归还", "正在使用", "故障"],
+      popupVisible: true
     }
   },
   computed: {
@@ -62,7 +63,7 @@ export default {
     loadTop() {
       let params = {
         personal_id: this.user.user_id,
-        size: 10
+        size: 5
       }
       this.getOrderList({
         params,
@@ -76,7 +77,7 @@ export default {
       this.loading = true;
       let params = {
         personal_id: this.user.user_id,
-        size: 10,
+        size: 5,
         page: this.order.page
       }
       this.getOrderListMore({
@@ -94,7 +95,7 @@ export default {
   mounted() {
     let params = {
       personal_id: this.user.user_id,
-      size: 10
+      size: 5
     }
     this.getOrderList({
       params

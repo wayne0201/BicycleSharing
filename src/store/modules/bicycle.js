@@ -2,7 +2,8 @@ import {
   RENT_BICYCLE,
   CHANG_LEASE_STATUS,
   ERROR_MSG,
-  INIT_BICYCLE
+  INIT_BICYCLE,
+  GET_ORDER_LIST
 } from '../constants';
 
 const init = {
@@ -25,9 +26,10 @@ const actions = {
   rentBicycle({ commit, state, dispatch }, { params, onSuccess, onFail }){
     axios.post('/bicycle/rentBicycle', params).then(res => {
       if (res.status === 200 && res.data.code === 0) {
-        let data = res.data.data
+        let {data, order} = res.data
         commit(CHANG_LEASE_STATUS, data.lease_status)
         commit(RENT_BICYCLE, data)
+        commit(GET_ORDER_LIST, order)
         onSuccess && onSuccess()
       } else {
         let msg = res.data.msg
@@ -55,6 +57,7 @@ const actions = {
         let data = res.data
         commit(CHANG_LEASE_STATUS, data.lease_status)
         commit(INIT_BICYCLE)
+        commit(GET_ORDER_LIST, data.data)
         onSuccess && onSuccess(data.end_time)
       } else {
         let msg = res.data.msg
@@ -69,6 +72,7 @@ const actions = {
         let data = res.data
         commit(CHANG_LEASE_STATUS, data.lease_status)
         commit(INIT_BICYCLE)
+        commit(GET_ORDER_LIST, data.data)
         onSuccess && onSuccess(data.end_time)
       } else {
         let msg = res.data.msg

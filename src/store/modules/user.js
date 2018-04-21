@@ -1,7 +1,10 @@
 import {
   AUTH_SUCCESS,
   ERROR_MSG,
-  CHANG_LEASE_STATUS
+  CHANG_LEASE_STATUS,
+  INIT_USER,
+  INIT_ORDER,
+  INIT_BICYCLE
 } from '../constants';
 
 const init = {
@@ -80,6 +83,11 @@ const actions = {
         onFail && onFail()
       }
     })
+  },
+  logoutSumbit({ commit, state, dispatch }){
+    commit(INIT_USER);
+    commit(INIT_ORDER);
+    commit(INIT_BICYCLE);
   }
 }
 
@@ -93,7 +101,7 @@ const mutations = {
   [CHANG_LEASE_STATUS](state, flag){
     state.personal.lease_status = flag
   },
-  logoutSumbit(state) {
+  [INIT_USER](state) {
     Object.assign(state, init)
   }
 }
