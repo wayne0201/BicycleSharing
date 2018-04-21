@@ -4,12 +4,8 @@
       <span slot="left" class="header-left">骑行订单</span>
     </mt-header>
     <div class="order-body">
-      <mt-loadmore :top-method="loadTop" ref="loadmore" v-if="list.length > 0">
-        <ul
-          v-infinite-scroll="loadMore"
-          infinite-scroll-disabled="loading"
-          infinite-scroll-distance="10"
-          >
+      <mt-loadmore :top-method="loadTop" ref="loadmore" :bottom-method="loadMore" v-if="list.length > 0" :bottom-all-loaded="order.next === 0">
+        <ul>
           <li v-for="(item, index) in list" :key="index" class="order-item-wrap">
             <div class="item-title">
               单车: {{item.bicycle_id}}
@@ -69,12 +65,14 @@ export default {
         params,
         onSuccess: () => {
           this.$refs.loadmore.onTopLoaded();
+        },
+        onFail: () => {
+          this.$refs.loadmore.onTopLoaded();
+          Toast(this.user.msg)
         }
       })
     },
     loadMore() {
-      if(this.order.next === 0) return
-      this.loading = true;
       let params = {
         personal_id: this.user.user_id,
         size: 5,
@@ -83,7 +81,11 @@ export default {
       this.getOrderListMore({
         params,
         onSuccess: () => {
-          this.loading = false;
+          this.$refs.loadmore.onBottomLoaded();
+        },
+        onFail: () => {
+          this.$refs.loadmore.onBottomLoaded();
+          Toast(this.user.msg)
         }
       })
     },
@@ -98,7 +100,10 @@ export default {
       size: 5
     }
     this.getOrderList({
-      params
+      params,
+      onFail: () => {
+        Toast(this.user.msg)
+      }
     })
   }
 }

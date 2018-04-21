@@ -272,6 +272,88 @@ Router.post('/order', function (req, res) {
   }).sort({ 'create_time': -1 }).skip((page-1) * size).limit(size).exec()
 })
 
+Router.post('/list', function (req, res) {
+  let { enterprise_id, size, page } = req.body
+  size = parseInt(size) || 10
+  page = parseInt(page) || 1
+  Bicycle.find({ '$or': [{ enterprise_id, bicycle_status: 0 }, { enterprise_id, bicycle_status: 1 }]}, function (e, d) {
+    if (e) {
+      return res.json({
+        code: 1,
+        msg: e
+      })
+    }
+    if (d.length < size) {
+      return res.json({
+        code: 0,
+        data: d,
+        next: 0
+      })
+    }
+    return res.json({
+      code: 0,
+      data: d,
+      next: 1
+    })
+  }).sort({ 'bicycle_id': -1 }).skip((page - 1) * size).limit(size).exec()
+})
+
+Router.post('/faultList', function (req, res) {
+  let { enterprise_id, size, page } = req.body
+  size = parseInt(size) || 10
+  page = parseInt(page) || 1
+  Bicycle.find({ enterprise_id, bicycle_status: 2 }, function (e, d) {
+    if (e) {
+      return res.json({
+        code: 1,
+        msg: e
+      })
+    }
+    if (d.length < size) {
+      return res.json({
+        code: 0,
+        data: d,
+        next: 0
+      })
+    }
+    return res.json({
+      code: 0,
+      data: d,
+      next: 1
+    })
+  }).sort({ 'bicycle_id': -1 }).skip((page - 1) * size).limit(size).exec()
+})
+
+Router.post('/detail', function (req, res) {
+  let { bicycle_id } = req.body
+  Bicycle.findOne({ bicycle_id }, { _id: 0, __v: 0 }, function (e, d) {
+    if (e) {
+      return res.json({
+        code: 1,
+        msg: e
+      })
+    }
+    Order.count({ bicycle_id },function (err, doc) {
+      console.log(doc)
+      if (err) {
+        return res.json({
+          code: 1,
+          msg: err
+        })
+      }
+      res.json({
+        code: 0,
+        data: {
+          count: doc,
+          ...d._doc
+        }
+      })
+    })
+
+  })
+})
+
+
 
 
 module.exports = Router

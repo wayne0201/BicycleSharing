@@ -9,5 +9,11 @@ export const INIT_USER = "INIT_USER"
 export const GET_ORDER_LIST = "GET_ORDER_LIST"
 export const GET_ORDER_LIST_MORE = "GET_ORDER_LIST_MORE"
 
+export const GET_LIST = "GET_LIST"
+export const GET_LIST_MORE = "GET_LIST_MORE"
+export const GET_FAULT_LIST = "GET_FAULT_LIST"
+export const GET_FAULT_LIST_MORE = "GET_FAULT_LIST_MORE"
+export const INIT_LIST = "INIT_LIST"
+
 
 

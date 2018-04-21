@@ -28,7 +28,7 @@ const actions = {
         onSuccess && onSuccess()
       } else {
         let msg = res.data.msg
-        console.log(msg)
+        commit(ERROR_MSG, msg)
         onFail && onFail()
       }
     })
@@ -41,6 +41,7 @@ const actions = {
         onSuccess && onSuccess()
       } else {
         let msg = res.data.msg
+        commit(ERROR_MSG, msg)
         onFail && onFail()
       }
     })

@@ -73,8 +73,10 @@ export default {
   font-size: 18px;
 }
 .manage-nav{
+  box-sizing: border-box;
   display: flex;
-  padding: 15px 0;
+  align-items: center;
+  height: 64px;
   margin: 0 15px;
 }
 .add-cycle, .subtract-cycle{
