@@ -35,11 +35,11 @@ const actions = {
       if (res.status === 200 && res.data.code === 0) {
         let data = res.data
         commit(GET_LIST, data)
-        onSuccess && onSuccess()
+        onSuccess && onSuccess(data)
       } else {
         let msg = res.data.msg
         commit(ERROR_MSG, msg)
-        onFail && onFail()
+        onFail && onFail(msg)
       }
     })
   },
@@ -48,11 +48,11 @@ const actions = {
       if (res.status === 200 && res.data.code === 0) {
         let data = res.data
         commit(GET_LIST_MORE, data)
-        onSuccess && onSuccess()
+        onSuccess && onSuccess(data)
       } else {
         let msg = res.data.msg
         commit(ERROR_MSG, msg)
-        onFail && onFail()
+        onFail && onFail(msg)
       }
     })
   },
@@ -61,11 +61,11 @@ const actions = {
       if (res.status === 200 && res.data.code === 0) {
         let data = res.data
         commit(GET_FAULT_LIST, data)
-        onSuccess && onSuccess()
+        onSuccess && onSuccess(data)
       } else {
         let msg = res.data.msg
         commit(ERROR_MSG, msg)
-        onFail && onFail()
+        onFail && onFail(msg)
       }
     })
   },
@@ -74,14 +74,40 @@ const actions = {
       if (res.status === 200 && res.data.code === 0) {
         let data = res.data
         commit(GET_FAULT_LIST_MORE, data)
-        onSuccess && onSuccess()
+        onSuccess && onSuccess(data)
       } else {
         let msg = res.data.msg
         commit(ERROR_MSG, msg)
-        onFail && onFail()
+        onFail && onFail(msg)
       }
     })
-  }
+  },
+  createBicycle({ commit, state, dispatch }, { params, onSuccess, onFail }) {
+    axios.post('/bicycle/createBicycle', params).then(res => {
+      if (res.status === 200 && res.data.code === 0) {
+        let data = res.data
+        commit(GET_LIST, data)
+        onSuccess && onSuccess(data)
+      } else {
+        let msg = res.data.msg
+        commit(ERROR_MSG, msg)
+        onFail && onFail(msg)
+      }
+    })
+  },
+  removeBicycle({ commit, state, dispatch }, { params, onSuccess, onFail }) {
+    axios.post('/bicycle/removeBicycle', params).then(res => {
+      if (res.status === 200 && res.data.code === 0) {
+        let data = res.data
+        commit(GET_LIST, data)
+        onSuccess && onSuccess(data)
+      } else {
+        let msg = res.data.msg
+        commit(ERROR_MSG, msg)
+        onFail && onFail(msg)
+      }
+    })
+  },
 }
 
 const mutations = {

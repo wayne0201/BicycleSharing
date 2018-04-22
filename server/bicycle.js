@@ -352,7 +352,94 @@ Router.post('/detail', function (req, res) {
   })
 })
 
+Router.post('/createBicycle', function (req, res) {
+  let { bicycle_id, bicycle_pwd, enterprise_id } = req.body
+  Bicycle.findOne({ bicycle_id }, function(err, doc) {
+    if (doc) {
+      return res.json({
+        code: 1,
+        msg: "该单车编号已存在!"
+      })
+    }
+    Bicycle.create({ bicycle_id, bicycle_pwd, enterprise_id }, function(e, d) {
+      if (e) {
+        return res.json({
+          code: 1,
+          msg: e
+        })
+      }
+      Bicycle.find({ '$or': [{ enterprise_id, bicycle_status: 0 }, { enterprise_id, bicycle_status: 1 }] }, function (e1, d1) {
+        if (e1) {
+          return res.json({
+            code: 1,
+            msg: e1
+          })
+        }
+        if (d1.length < 10) {
+          return res.json({
+            code: 0,
+            data: d1,
+            next: 0
+          })
+        }
+        return res.json({
+          code: 0,
+          data: d1,
+          next: 1
+        })
+      }).sort({ 'bicycle_id': -1 }).skip(0).limit(10).exec()
+    })
+  })
+})
 
+
+Router.post('/removeBicycle', function (req, res) {
+  let { bicycle_id, bicycle_pwd, enterprise_id } = req.body
+  Bicycle.findOne({ bicycle_id, enterprise_id }, function (err, doc) {
+    if (!doc) {
+      return res.json({
+        code: 1,
+        msg: "本公司旗下不存在该单车编号!"
+      })
+    }
+    Bicycle.findOne({ bicycle_id, bicycle_pwd }, function (e, d) {
+      if (!d) {
+        return res.json({
+          code: 1,
+          msg: "密码不正确!"
+        })
+      }
+      Bicycle.remove({ bicycle_id }, function (e1, d1) {
+        if (e1) {
+          return res.json({
+            code: 1,
+            msg: e1
+          })
+        }
+        Bicycle.find({ '$or': [{ enterprise_id, bicycle_status: 0 }, { enterprise_id, bicycle_status: 1 }] }, function (e2, d2) {
+          if (e2) {
+            return res.json({
+              code: 1,
+              msg: e2
+            })
+          }
+          if (d2.length < 10) {
+            return res.json({
+              code: 0,
+              data: d2,
+              next: 0
+            })
+          }
+          return res.json({
+            code: 0,
+            data: d2,
+            next: 1
+          })
+        }).sort({ 'bicycle_id': -1 }).skip(0).limit(10).exec()
+      })
+    })
+  })
+})
 
 
 module.exports = Router

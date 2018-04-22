@@ -30,11 +30,11 @@ const actions = {
         commit(CHANG_LEASE_STATUS, data.lease_status)
         commit(RENT_BICYCLE, data)
         commit(GET_ORDER_LIST, order)
-        onSuccess && onSuccess()
+        onSuccess && onSuccess(data)
       } else {
         let msg = res.data.msg
         commit(ERROR_MSG, msg)
-        onFail && onFail()
+        onFail && onFail(msg)
       }
     })
   },
@@ -43,11 +43,11 @@ const actions = {
       if (res.status === 200 && res.data.code === 0) {
         let data = res.data.data
         commit(RENT_BICYCLE, data)
-        onSuccess && onSuccess()
+        onSuccess && onSuccess(data)
       } else {
         let msg = res.data.msg
         commit(ERROR_MSG, msg)
-        onFail && onFail()
+        onFail && onFail(msg)
       }
     })
   },
@@ -62,7 +62,7 @@ const actions = {
       } else {
         let msg = res.data.msg
         commit(ERROR_MSG, msg)
-        onFail && onFail()
+        onFail && onFail(msg)
       }
     })
   },
@@ -77,7 +77,7 @@ const actions = {
       } else {
         let msg = res.data.msg
         commit(ERROR_MSG, msg)
-        onFail && onFail()
+        onFail && onFail(msg)
       }
     })
   }
