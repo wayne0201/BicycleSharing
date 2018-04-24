@@ -1,7 +1,7 @@
 <template>
   <div class="me-page">
     <mt-header>
-      <span slot="left" class="header-left">个人信息</span>
+      <span slot="left" class="header-left">{{isEnterprise ? "公司信息" : "个人信息"}}</span>
     </mt-header>
     <div class="profile">
       <img src="../assets/header-img.png" width="64" height="64">

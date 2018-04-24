@@ -1,6 +1,6 @@
 <template>
   <div class="modify-info-page">
-    <mt-header title="修改密码">
+    <mt-header title="修改资料">
       <mt-button icon="back"  slot="left" @click="disChange">返回</mt-button>
     </mt-header>
     <div class="modify-info-box" v-if="isEnterprise">
