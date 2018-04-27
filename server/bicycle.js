@@ -1,6 +1,5 @@
 const express = require("express")
 const Router = express.Router()
-
 const model = require("./model")
 const Personal = model.getModel('personalUser')
 const Order = model.getModel('order')
@@ -392,7 +391,6 @@ Router.post('/createBicycle', function (req, res) {
   })
 })
 
-
 Router.post('/removeBicycle', function (req, res) {
   let { bicycle_id, bicycle_pwd, enterprise_id } = req.body
   Bicycle.findOne({ bicycle_id, enterprise_id }, function (err, doc) {
@@ -440,6 +438,5 @@ Router.post('/removeBicycle', function (req, res) {
     })
   })
 })
-
 
 module.exports = Router

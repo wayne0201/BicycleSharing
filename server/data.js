@@ -1,14 +1,10 @@
 const express = require("express")
 const Router = express.Router()
-
-
 const model = require("./model")
 const Personal = model.getModel('personalUser')
 const Enterprise = model.getModel('enterpriseUser')
 const Order = model.getModel('order')
 const Bicycle = model.getModel('bicycle')
-
-
 
 Router.get('/personal', function (req, res) {
   Personal.find({}, function (err, doc) {
@@ -24,6 +20,7 @@ Router.get('/personal', function (req, res) {
     })
   })
 })
+
 Router.get('/enterprise', function (req, res) {
   Enterprise.find({}, function (err, doc) {
     if (err) {

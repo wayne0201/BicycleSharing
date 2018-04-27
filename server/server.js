@@ -20,7 +20,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use('/user', userRouter)
 app.use('/bicycle', bicycleRouter)
-app.use('/data', getData)
+// app.use('/data', getData)
 
 let host = utils.getIPAdress()
 //后台端口9000
